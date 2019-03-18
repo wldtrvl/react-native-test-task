@@ -14,7 +14,7 @@ Screen 2:
 
 - title becomes the name of the track
 - nav bar stays the same
-- create audio player ui + functionality (play/pause, next/previous track, time indicator)
+- create audio player ui + functionality (play/pause, next/previous track, time indicator) (lib: https://github.com/GetStream/react-native-audio-player)
 
 Clicking on any track should proceed to Screen 2. Make it possible to go to Screen 1 using an arrow.
 
