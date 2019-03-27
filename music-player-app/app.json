@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "music-player-app",
-    "slug": "music-player-app",
+    "name": "Player",
+    "slug": "expoplayer",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
