@@ -18,11 +18,14 @@ class PlaylistItem {
 }
 const PLAYLIST = [
   new PlaylistItem(
-    'bellhound',
-    '../music/bellhound_choir_others.mp3'
+    'Bellhound Choir - Others In The Night',
+    require('./assets/music/bellhound_choir_others.mp3')
   ),
+  new PlaylistItem(
+    'Memphis May Fire - Vices',
+    require('./assets/music/memphis_may_fire_vices.mp3')
+  ),  
 ];
-
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
 const BACKGROUND_COLOR = '#FFFFFF';
 const DISABLED_OPACITY = 0.4;
@@ -30,7 +33,6 @@ const FONT_SIZE = 20;
 const LOADING_STRING = 'Loading...';
 const BUFFERING_STRING = 'Buffering...';
 const RATE_SCALE = 3.0;
-
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -75,17 +77,14 @@ export default class App extends Component {
       this.playbackInstance.setOnPlaybackStatusUpdate(null);
       this.playbackInstance = null;
     }
-
-    // const source = { uri: PLAYLIST[this.index].uri };
-
+    const source = PLAYLIST[this.index].uri ;
     const initialStatus = {
       shouldPlay: playing,
       rate: this.state.rate,
       volume: this.state.volume,
     };
-
-    const { sound, status } = await Audio.Sound.create(
-      require('./assets/music/bellhound_choir_others.mp3'),
+    const { sound, status } = await Audio.Sound.create(      
+      source,
       initialStatus,
       this._onPlaybackStatusUpdate
     );
