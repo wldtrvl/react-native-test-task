@@ -16,17 +16,17 @@ class PlaylistItem {
     this.uri = uri;
   }
 }
-const PLAYLIST = [  
+const PLAYLIST = [
   new PlaylistItem(
     'bellhound',
-    '../assets/music/bellhound_choir_others.mp3'
+    '../music/bellhound_choir_others.mp3'
   ),
 ];
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
 const BACKGROUND_COLOR = '#FFFFFF';
 const DISABLED_OPACITY = 0.4;
-const FONT_SIZE = 14;
+const FONT_SIZE = 20;
 const LOADING_STRING = 'Loading...';
 const BUFFERING_STRING = 'Buffering...';
 const RATE_SCALE = 3.0;
@@ -62,7 +62,7 @@ export default class App extends Component {
       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
     });
     (async () => {
-      
+
       this.setState({ fontLoaded: true });
     })();
 
@@ -76,7 +76,8 @@ export default class App extends Component {
       this.playbackInstance = null;
     }
 
-    const source = { uri: PLAYLIST[this.index].uri };
+    // const source = { uri: PLAYLIST[this.index].uri };
+
     const initialStatus = {
       shouldPlay: playing,
       rate: this.state.rate,
@@ -84,7 +85,7 @@ export default class App extends Component {
     };
 
     const { sound, status } = await Audio.Sound.create(
-      source,
+      require('./assets/music/bellhound_choir_others.mp3'),
       initialStatus,
       this._onPlaybackStatusUpdate
     );
@@ -175,7 +176,7 @@ export default class App extends Component {
     if (this.playbackInstance != null) {
       try {
         await this.playbackInstance.setRateAsync(rate);
-      } catch (error) {        
+      } catch (error) {
       }
     }
   };
@@ -249,11 +250,12 @@ export default class App extends Component {
       <View />
     ) : (
         <View style={styles.container}>
-          
           <View style={styles.detailsContainer}>
             <Text style={[styles.text]}>
               {this.state.playbackInstanceName}
             </Text>
+          </View>
+          <View style={styles.timeContainer}>
             <Text style={[styles.text]}>
               {this.state.isBuffering ? (
                 BUFFERING_STRING
@@ -274,8 +276,7 @@ export default class App extends Component {
             ]}
           >
             <TouchableHighlight
-              underlayColor={BACKGROUND_COLOR}
-              style={styles.wrapper}
+              underlayColor={BACKGROUND_COLOR}              
               onPress={this._onBackPressed}
               disabled={this.state.isLoading}
             >
@@ -387,7 +388,7 @@ export default class App extends Component {
                 />
               </View>
             </View> */}
-          </View>          
+          </View>
         </View>
       );
   }
@@ -401,15 +402,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     backgroundColor: BACKGROUND_COLOR,
-  }, 
+  },
   detailsContainer: {
     height: 40,
     marginTop: 60,
     alignItems: 'center',
   },
+  timeContainer:{
+    height: 30,
+    marginTop: DEVICE_HEIGHT / 2.5,
+    alignItems: 'center',
+
+},
   playbackContainer: {
     flex: 1,
-    marginTop: '25%',
+    marginTop: 10,
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -423,10 +430,11 @@ const styles = StyleSheet.create({
   text: {
     fontSize: FONT_SIZE,
     minHeight: FONT_SIZE,
+    
   },
   buttonsContainerBase: {
     flex: 1,
-    marginTop: 150,
+    marginTop: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -446,5 +454,9 @@ const styles = StyleSheet.create({
   },
   volumeSlider: {
     width: DEVICE_WIDTH - 140,
+  },
+  wrapper:{
+    flex: 1,
+    alignItems: 'center',
   },
 });
