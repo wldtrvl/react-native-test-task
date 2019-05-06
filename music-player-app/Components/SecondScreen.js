@@ -42,6 +42,9 @@ export default class SecondScreen extends Component {
 		};
 	}
 
+	componentWillUnmount() {
+		this.playbackInstance.stopAsync();
+	}
 
 	componentDidMount() {
 		Audio.setAudioModeAsync({
@@ -70,7 +73,7 @@ export default class SecondScreen extends Component {
 			volume: this.state.volume,
 		};
 
-		const { sound, status } = await Audio.Sound.create(
+		const { sound, status } = await Audio.Sound.createAsync(
 			source,
 			initialStatus,
 			this._onPlaybackStatusUpdate
